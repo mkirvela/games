@@ -3,33 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matias Kirvela — Games</title>
+<title>mkirvela — Games</title>
 <meta name="description" content="Small browser games, one HTML file each. No install, no account, no build step — open one and it runs.">
-<meta name="theme-color" content="#12100d">
+<meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
 
 <!-- Social preview. Some crawlers (Facebook, Slack) want an ABSOLUTE og:image
      URL. Once this is on a real domain, prefix these three with it, e.g.
      https://mkirvela.github.io/games/assets/img/site-og.jpg -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Matias Kirvela — Games">
+<meta property="og:title" content="mkirvela — Games">
 <meta property="og:description" content="Small browser games, one HTML file each. No install, no account — open one and it runs.">
 <meta property="og:image" content="assets/img/site-og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2312100d'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' fill='%23e8a33d' text-anchor='middle'%3EMK%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/img/favicon-64.png">
+
+<!-- Blocking, and in the head, so the stored theme is on <html> before the
+     first paint. Deferring it buys nothing and costs a flash of the wrong
+     colour on every load. -->
+<script src="assets/js/theme.js"></script>
 </head>
 <body>
 <div class="shell">
 
 <header class="wrap masthead">
   <a class="wordmark" href="index.html">
-    <span class="monogram">MK</span>
-    <span>Matias Kirvela</span>
+    <img class="avatar" src="assets/img/mkirvela.png" width="128" height="128" alt="">
+    <span class="wordmark-name">mkirvela</span>
   </a>
   <nav>
     <a href="#shelf">Games</a>
-    <a href="https://github.com/mkirvela">Source</a>
+    <!-- hidden until theme.js unhides it, so no-JS readers are not offered a
+         control that cannot do anything -->
+    <button class="theme-btn" type="button" data-theme-toggle hidden>
+      Theme &middot; <span class="theme-btn-text">auto</span>
+    </button>
   </nav>
 </header>
 
@@ -51,8 +61,12 @@
 
   <!-- ======================================================================
        ONE GAME = ONE <article class="game">. To add the next one, copy a
-       whole block, bump the index number, and swap the two --accent values
-       for that game's own ink. Nothing else on the page needs to change.
+       whole block, bump the index number, and swap the --accent values for
+       that game's own ink. Nothing else on the page needs to change.
+       --accent      the filled accent (button, dot, pill)
+       --accent-ink  type laid on top of that fill
+       The readable-on-paper variant is derived from --accent in the
+       stylesheet, so there is nothing else to pick.
        ====================================================================== -->
 
   <article class="game" style="--accent:#e8a33d; --accent-ink:#17110a;">
@@ -89,17 +103,17 @@
   </article>
 
   <article class="game" style="--accent:#e85a42; --accent-ink:#1a0705;">
-    <a class="plate" href="games/mimic-season.html" aria-label="Mimic Season — details">
+    <a class="plate" href="games/some-of-it-bites.html" aria-label="Some of It Bites — details">
       <span class="plate-frame">
         <img src="assets/img/mimic.jpg" width="1200" height="750"
              alt="Two-ink woodcut key art: eyes drawn all over the pale wallpaper of a cellar, ochre chests, barrels and stools on the floor, and a bookshelf hinged open into a huge vermilion mouth of teeth.">
       </span>
-      <span class="plate-cue">Mimic Season</span>
+      <span class="plate-cue">Some of It Bites</span>
     </a>
 
     <div class="game-body">
       <p class="game-index"><b>02</b> <span class="kind">Casual incremental</span> <span class="status">Balancing</span></p>
-      <h2><a href="games/mimic-season.html">Mimic Season</a></h2>
+      <h2><a href="games/some-of-it-bites.html">Some of It Bites</a></h2>
       <p class="game-tagline">A casual incremental about hitting furniture until it screams.</p>
       <p class="game-desc">
         You are a Mimicologist, third class, licensed by the Guild of Ambiguous
@@ -113,11 +127,11 @@
         <li><b>Controls</b>Hold one button</li>
       </ul>
       <div class="actions">
-        <a class="btn" href="https://mkirvela.github.io/mimic/mimic-season.html">
+        <a class="btn" href="https://mkirvela.github.io/some-of-it-bites/">
           Play in browser
           <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
         </a>
-        <a class="link-more" href="games/mimic-season.html">Read more &rarr;</a>
+        <a class="link-more" href="games/some-of-it-bites.html">Read more &rarr;</a>
       </div>
     </div>
   </article>
@@ -125,9 +139,8 @@
 </main>
 
 <footer class="wrap footer">
-  <p class="label">Made by Matias Kirvela &middot; Helsinki</p>
+  <p class="label">Made by mkirvela &middot; Helsinki</p>
   <div class="footer-links">
-    <a href="https://github.com/mkirvela">GitHub</a>
     <a href="#shelf">Back to top</a>
   </div>
 </footer>

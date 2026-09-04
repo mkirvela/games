@@ -2,21 +2,40 @@
    THE GALLERY — one stylesheet, no dependencies, no build step.
    Matches the house rule the games themselves keep: nothing fetched, no CDN,
    no web fonts. Everything below is system type and hand-mixed ink.
+
+   THEME. Light is the base. Dark is a token swap, and it happens when either
+   the operating system asks for it or the reader has picked it from the
+   masthead. `data-theme` on <html> is the reader's choice; its ABSENCE means
+   auto, which is what lets the media query below do the deciding.
+
+   Token names describe the ROLE, not the colour, so the same rule reads
+   correctly in both themes:
+     --ground*  the surface something sits on
+     --mark*    the ink laid on it
+     --accent      a filled accent shape (button, dot, pill)
+     --accent-text the same accent darkened enough to be read as ink on
+                   paper; in dark mode the two are the same value
    ========================================================================== */
 
 :root {
-  /* --- ink. a warm near-black, so the game art (amber, vermilion) sits on
-         something that reads as paper stock rather than screen black. ------- */
-  --ink:        #12100d;
-  --ink-panel:  #1a1713;
-  --ink-raised: #241f19;
-  --paper:      #f2ede1;
-  --paper-dim:  #c6bdaa;
-  --muted:      #8b8172;
-  --line:       rgba(242, 237, 225, 0.11);
-  --line-soft:  rgba(242, 237, 225, 0.06);
+  color-scheme: light dark;
 
-  /* --- default accent. every game card overrides these two locally, so the
+  /* --- paper. A warm off-white rather than #fff, so the game art (amber,
+         vermilion) sits on something that reads as stock. ------------------- */
+  --ground:        #faf7f0;
+  --ground-panel:  #f3eee2;
+  --ground-raised: #ece5d5;
+  --mark:          #1b1712;
+  --mark-dim:      #4e4536;
+  --muted:         #83786a;
+  --line:          rgba(27, 23, 18, 0.16);
+  --line-soft:     rgba(27, 23, 18, 0.085);
+
+  --shadow-color: rgba(70, 54, 28, 0.30);
+  --grain: 0.05;
+  --bloom: 0.16;
+
+  /* --- default accent. every game card overrides --accent locally, so the
          card borrows its own game's ink. ------------------------------------ */
   --accent:     #e8a33d;
   --accent-ink: #17110a;
@@ -25,9 +44,66 @@
   --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
-  --gutter: clamp(20px, 5vw, 64px);
+  --gutter: clamp(22px, 5.5vw, 64px);
   --measure: 1240px;
 }
+
+/* An accent bright enough to sit under a thumb is not dark enough to be read
+   as a word. On paper the accent is mixed down toward burnt umber; on the dark
+   ground it is left alone. Declared on the two elements that actually carry
+   --accent (body on a detail page, .game on a card) because a custom property
+   substitutes against the element it is declared on, not the one that uses it. */
+body,
+.game { --accent-text: color-mix(in srgb, var(--accent) 50%, #2b1600); }
+
+/* The dark palette is written twice on purpose: once for "the OS says dark and
+   nobody has overridden it", once for "the reader picked dark". CSS has no way
+   to spell both conditions in one selector, and repeating fourteen values is
+   cheaper to read — and to edit — than the var()-switch tricks that would
+   avoid it. Keep the two blocks identical; only their selectors differ. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:        #12100d;
+    --ground-panel:  #1a1713;
+    --ground-raised: #241f19;
+    --mark:          #f2ede1;
+    --mark-dim:      #c6bdaa;
+    --muted:         #8b8172;
+    --line:          rgba(242, 237, 225, 0.11);
+    --line-soft:     rgba(242, 237, 225, 0.06);
+
+    --shadow-color: rgba(0, 0, 0, 0.92);
+    --grain: 0.035;
+    --bloom: 0.10;
+  }
+
+  :root:not([data-theme="light"]) body,
+  :root:not([data-theme="light"]) .game { --accent-text: var(--accent); }
+}
+
+:root[data-theme="dark"] {
+  --ground:        #12100d;
+  --ground-panel:  #1a1713;
+  --ground-raised: #241f19;
+  --mark:          #f2ede1;
+  --mark-dim:      #c6bdaa;
+  --muted:         #8b8172;
+  --line:          rgba(242, 237, 225, 0.11);
+  --line-soft:     rgba(242, 237, 225, 0.06);
+
+  --shadow-color: rgba(0, 0, 0, 0.92);
+  --grain: 0.035;
+  --bloom: 0.10;
+}
+
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .game { --accent-text: var(--accent); }
+
+/* Scrollbars, form controls and the space behind the page are the browser's to
+   paint, and `color-scheme` is the only thing it listens to. Without these two
+   a forced theme leaves a dark scrollbar down the side of a light page. */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
 
 * { box-sizing: border-box; }
 
@@ -35,8 +111,8 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--ground);
+  color: var(--mark);
   font-family: var(--sans);
   font-size: 17px;
   line-height: 1.65;
@@ -44,16 +120,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* A rag-paper grain over the whole page. Cheap, fixed, and the reason the flat
-   dark does not read as a void. Kept at 3.5% — visible as texture, never as
-   noise. */
+/* A rag-paper grain over the whole page. Cheap, fixed, and the reason neither
+   flat ground reads as a void. Dark speckle either way — on paper it is tooth,
+   on the dark ground it is noise in the emulsion. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: var(--grain);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -69,23 +145,33 @@ body::after {
   transform: translateX(-50%);
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(closest-side, rgba(232, 163, 61, 0.10), transparent 72%);
+  background: radial-gradient(closest-side,
+              rgba(232, 163, 61, var(--bloom)), transparent 72%);
 }
 
 .shell { position: relative; z-index: 1; }
 
-img { max-width: 100%; display: block; }
+/* height:auto is load-bearing. Every <img> on the site carries width/height
+   attributes for layout stability, and those land as presentational hints —
+   so any rule that sets width alone would otherwise leave the height pinned
+   at the intrinsic pixel value and stretch the picture. */
+img { max-width: 100%; height: auto; display: block; }
 
 a { color: inherit; }
 
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-text);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
+/* Every band on the page is a .wrap, and the gutter lives here and only here.
+   Anything that also wants vertical room must say so with padding-block or the
+   two longhands — a `padding: 26px 0` shorthand further down the file wins on
+   source order and quietly knocks the side gutter back to zero, which puts the
+   masthead and the hero flush against the edge of a phone. */
 .wrap {
   max-width: var(--measure);
   margin: 0 auto;
@@ -117,8 +203,9 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding: 26px 0 24px;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding-block: 26px 24px;
   border-bottom: 1px solid var(--line-soft);
 }
 
@@ -126,33 +213,36 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
   text-decoration: none;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
 }
 
-.wordmark:hover { color: var(--paper); }
+.wordmark:hover { color: var(--mark); }
 
-.monogram {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: var(--ink-panel);
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
-  color: var(--accent);
+.wordmark-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The face. A transparent PNG with its own drawn outline, so it wants no
+   frame, no plate and no background behind it. */
+.avatar {
+  width: 32px;
+  height: 32px;
   flex: none;
+  object-fit: contain;
 }
 
 .masthead nav {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  gap: 8px 22px;
   font-family: var(--mono);
   font-size: 11.5px;
   letter-spacing: 0.14em;
@@ -166,13 +256,42 @@ a { color: inherit; }
   border-bottom: 1px solid transparent;
 }
 
-.masthead nav a:hover { color: var(--paper); border-bottom-color: var(--accent); }
+.masthead nav a:hover { color: var(--mark); border-bottom-color: var(--accent-text); }
+
+/* --- the theme control. A word, not an icon: the only glyph anywhere on this
+       site is the play triangle, and a sun/moon pair would be the second. It
+       reads as the CURRENT state — auto, light, dark — and cycles on click.
+       `font: inherit` first, because a <button> otherwise arrives carrying the
+       platform's own font stack and size and ignores everything set on nav. -- */
+.theme-btn {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme-btn:hover { color: var(--mark); border-bottom-color: var(--accent-text); }
+
+/* The state word carries the accent, so the one thing that changes on click is
+   also the one thing wearing colour. */
+.theme-btn-text { color: var(--accent-text); }
 
 /* ==========================================================================
    HERO
    ========================================================================== */
 
-.hero { padding: clamp(56px, 11vw, 116px) 0 clamp(44px, 7vw, 72px); }
+.hero { padding-block: clamp(56px, 11vw, 116px) clamp(44px, 7vw, 72px); }
 
 .hero h1 {
   font-family: var(--serif);
@@ -186,18 +305,18 @@ a { color: inherit; }
 
 .hero h1 em {
   font-style: italic;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .hero .lede {
   font-size: clamp(17px, 2.1vw, 20.5px);
   line-height: 1.6;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
   max-width: 34em;
   margin: 0;
 }
 
-.hero .lede strong { color: var(--paper); font-weight: 600; }
+.hero .lede strong { color: var(--mark); font-weight: 600; }
 
 .hero-meta {
   display: flex;
@@ -240,11 +359,11 @@ a { color: inherit; }
   display: block;
   position: relative;
   padding: 9px;
-  background: var(--ink-raised);
+  background: var(--ground-raised);
   border: 1px solid var(--line);
   border-radius: 5px;
   text-decoration: none;
-  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 18px 40px -22px var(--shadow-color);
   transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
@@ -253,7 +372,7 @@ a { color: inherit; }
   position: relative;
   overflow: hidden;
   border-radius: 2px;
-  background: #000;
+  background: var(--ground-raised);
   aspect-ratio: 8 / 5;
 }
 
@@ -264,7 +383,9 @@ a { color: inherit; }
   transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* The play affordance rides in on hover — dark scrim, one accent word. */
+/* The play affordance rides in on hover — dark scrim, one accent word. The
+   scrim is dark in both themes because it sits on the artwork, not the page,
+   so its type stays light regardless. */
 .plate-cue {
   position: absolute;
   inset: auto 0 0 0;
@@ -276,7 +397,7 @@ a { color: inherit; }
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--paper);
+  color: #f2ede1;
   background: linear-gradient(to top, rgba(6, 5, 4, 0.92), transparent);
   opacity: 0;
   transform: translateY(6px);
@@ -295,7 +416,7 @@ a { color: inherit; }
 .plate:hover, .plate:focus-visible {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
-  box-shadow: 0 26px 54px -24px rgba(0, 0, 0, 0.95);
+  box-shadow: 0 26px 54px -24px var(--shadow-color);
 }
 
 .plate:hover .plate-frame img,
@@ -320,7 +441,7 @@ a { color: inherit; }
   text-transform: uppercase;
 }
 
-.game-index b { color: var(--accent); font-weight: 500; }
+.game-index b { color: var(--accent-text); font-weight: 500; }
 .game-index .kind { color: var(--muted); }
 .game-index .status { margin-left: auto; }
 
@@ -334,20 +455,20 @@ a { color: inherit; }
 }
 
 .game-body h2 a { text-decoration: none; }
-.game-body h2 a:hover { color: var(--accent); }
+.game-body h2 a:hover { color: var(--accent-text); }
 
 .game-tagline {
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(17px, 2.1vw, 20px);
   line-height: 1.45;
-  color: var(--accent);
+  color: var(--accent-text);
   margin: 0 0 18px;
 }
 
 .game-desc {
   margin: 0 0 22px;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
   font-size: 16px;
   max-width: 40em;
 }
@@ -373,7 +494,7 @@ a { color: inherit; }
   line-height: 1.45;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
 }
 
 .facts li:first-child { border-left: 0; padding-left: 0; }
@@ -418,24 +539,24 @@ a { color: inherit; }
 
 .btn-ghost {
   background: transparent;
-  color: var(--paper);
+  color: var(--mark);
   border-color: var(--line);
 }
 
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); filter: none; }
+.btn-ghost:hover { border-color: var(--accent-text); color: var(--accent-text); filter: none; }
 
 .link-more {
   font-family: var(--mono);
   font-size: 11.5px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   padding-bottom: 3px;
 }
 
-.link-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.link-more:hover { color: var(--accent-text); border-bottom-color: var(--accent-text); }
 
 /* --- status pill --------------------------------------------------------- */
 
@@ -447,7 +568,7 @@ a { color: inherit; }
   font-size: 10.5px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
   border: 1px solid var(--line);
   border-radius: 100px;
   padding: 4px 11px 4px 9px;
@@ -480,9 +601,9 @@ a { color: inherit; }
   text-decoration: none;
 }
 
-.backlink:hover { color: var(--accent); }
+.backlink:hover { color: var(--accent-text); }
 
-.game-hero { padding: 34px 0 clamp(28px, 5vw, 46px); }
+.game-hero { padding-block: 34px clamp(28px, 5vw, 46px); }
 
 .game-hero h1 {
   font-family: var(--serif);
@@ -497,11 +618,14 @@ a { color: inherit; }
 
 .hero-plate {
   padding: 10px;
-  background: var(--ink-raised);
+  background: var(--ground-raised);
   border: 1px solid var(--line);
   border-radius: 6px;
-  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.95);
-  margin-bottom: clamp(40px, 7vw, 76px);
+  box-shadow: 0 30px 70px -34px var(--shadow-color);
+  /* The whole margin, not just the bottom: <figure> carries a UA default of
+     `1em 40px`, which would otherwise inset the hero art 40px further than
+     every other band on the page. */
+  margin: 0 0 clamp(40px, 7vw, 76px);
 }
 
 .hero-plate .plate-frame { aspect-ratio: 16 / 10; }
@@ -530,7 +654,7 @@ a { color: inherit; }
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
   margin: 52px 0 18px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--line-soft);
@@ -546,10 +670,10 @@ a { color: inherit; }
   margin: 32px 0 8px;
 }
 
-.prose p { margin: 0 0 18px; color: var(--paper-dim); }
-.prose p.first { color: var(--paper); font-size: 19px; line-height: 1.6; }
-.prose strong { color: var(--paper); font-weight: 600; }
-.prose em { color: var(--paper); }
+.prose p { margin: 0 0 18px; color: var(--mark-dim); }
+.prose p.first { color: var(--mark); font-size: 19px; line-height: 1.6; }
+.prose strong { color: var(--mark); font-weight: 600; }
+.prose em { color: var(--mark); }
 
 .prose ul { margin: 0 0 22px; padding: 0; list-style: none; }
 
@@ -557,7 +681,7 @@ a { color: inherit; }
   position: relative;
   padding-left: 22px;
   margin-bottom: 11px;
-  color: var(--paper-dim);
+  color: var(--mark-dim);
 }
 
 .prose ul li::before {
@@ -567,20 +691,20 @@ a { color: inherit; }
   top: 0.72em;
   width: 7px;
   height: 1px;
-  background: var(--accent);
+  background: var(--accent-text);
 }
 
-.prose ul li strong { color: var(--paper); }
+.prose ul li strong { color: var(--mark); }
 
 .pull {
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(20px, 2.6vw, 25px);
   line-height: 1.42;
-  color: var(--paper);
+  color: var(--mark);
   margin: 36px 0;
   padding: 4px 0 4px 24px;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--accent-text);
 }
 
 /* --- sidebar ------------------------------------------------------------- */
@@ -588,7 +712,7 @@ a { color: inherit; }
 .aside {
   position: sticky;
   top: 28px;
-  background: var(--ink-panel);
+  background: var(--ground-panel);
   border: 1px solid var(--line);
   border-radius: 5px;
   padding: 22px;
@@ -611,9 +735,9 @@ a { color: inherit; }
 }
 
 .spec dt { color: var(--muted); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.15em; flex: none; }
-.spec dd { margin: 0; color: var(--paper-dim); text-align: right; }
-.spec dd a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
-.spec dd a:hover { border-bottom-color: var(--accent); }
+.spec dd { margin: 0; color: var(--mark-dim); text-align: right; }
+.spec dd a { color: var(--accent-text); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent-text) 35%, transparent); }
+.spec dd a:hover { border-bottom-color: var(--accent-text); }
 
 /* ==========================================================================
    FOOTER
@@ -621,7 +745,7 @@ a { color: inherit; }
 
 .footer {
   border-top: 1px solid var(--line-soft);
-  padding: 40px 0 56px;
+  padding-block: 40px 56px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -632,12 +756,12 @@ a { color: inherit; }
 .footer p { margin: 0; }
 
 .footer a {
-  color: var(--paper-dim);
+  color: var(--mark-dim);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
 }
 
-.footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.footer a:hover { color: var(--accent-text); border-bottom-color: var(--accent-text); }
 
 .footer-links {
   display: flex;
@@ -666,8 +790,8 @@ a { color: inherit; }
 
 @media (max-width: 560px) {
   body { font-size: 16px; }
-  .masthead { padding: 20px 0 18px; }
-  .masthead nav { gap: 16px; }
+  .masthead { padding-block: 20px 18px; }
+  .masthead nav { gap: 8px 16px; }
   .facts { grid-auto-flow: row; }
   .facts li { border-left: 0; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
   .facts li:first-child { padding-top: 11px; }
@@ -698,13 +822,13 @@ a { color: inherit; }
 .figure {
   margin: 34px 0;
   padding: 8px;
-  background: var(--ink-raised);
+  background: var(--ground-raised);
   border: 1px solid var(--line);
   border-radius: 5px;
-  box-shadow: 0 16px 36px -22px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 16px 36px -22px var(--shadow-color);
 }
 
-.figure img { border-radius: 2px; width: 100%; }
+.figure img { border-radius: 2px; width: 100%; height: auto; }
 
 .figure figcaption {
   padding: 11px 4px 2px;
@@ -723,7 +847,7 @@ a { color: inherit; }
   font-size: 0.86em;
   padding: 1px 5px;
   border-radius: 3px;
-  background: var(--ink-raised);
+  background: var(--ground-panel);
   border: 1px solid var(--line-soft);
-  color: var(--paper);
+  color: var(--mark);
 }

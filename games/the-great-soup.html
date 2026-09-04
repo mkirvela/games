@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Great Soup — Matias Kirvela</title>
+<title>The Great Soup — mkirvela</title>
 <meta name="description" content="A finite incremental about stirring. Keep it fed, keep it moving, keep it hot — and find out how far a soup can go.">
-<meta name="theme-color" content="#12100d">
+<meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="The Great Soup">
@@ -14,19 +15,28 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="../assets/css/site.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2312100d'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' fill='%23e8a33d' text-anchor='middle'%3EMK%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/img/favicon-64.png">
+
+<!-- Blocking, and in the head, so the stored theme is on <html> before the
+     first paint. Deferring it buys nothing and costs a flash of the wrong
+     colour on every load. -->
+<script src="../assets/js/theme.js"></script>
 </head>
 <body style="--accent:#e8a33d; --accent-ink:#17110a;">
 <div class="shell">
 
 <header class="wrap masthead">
   <a class="wordmark" href="../index.html">
-    <span class="monogram">MK</span>
-    <span>Matias Kirvela</span>
+    <img class="avatar" src="../assets/img/mkirvela.png" width="128" height="128" alt="">
+    <span class="wordmark-name">mkirvela</span>
   </a>
   <nav>
     <a href="../index.html#shelf">Games</a>
-    <a href="https://github.com/mkirvela/great-soup-game">Source</a>
+    <!-- hidden until theme.js unhides it, so no-JS readers are not offered a
+         control that cannot do anything -->
+    <button class="theme-btn" type="button" data-theme-toggle hidden>
+      Theme &middot; <span class="theme-btn-text">auto</span>
+    </button>
   </nav>
 </header>
 
@@ -141,7 +151,6 @@
       Play in browser
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
     </a>
-    <a class="btn btn-ghost" href="https://github.com/mkirvela/great-soup-game">Source on GitHub</a>
 
     <dl class="spec">
       <div><dt>Genre</dt><dd>Finite incremental</dd></div>
@@ -157,10 +166,9 @@
 </main>
 
 <footer class="wrap footer">
-  <p class="label">Made by Matias Kirvela &middot; Helsinki</p>
+  <p class="label">Made by mkirvela &middot; Helsinki</p>
   <div class="footer-links">
     <a href="../index.html#shelf">All games</a>
-    <a href="https://github.com/mkirvela">GitHub</a>
   </div>
 </footer>
 

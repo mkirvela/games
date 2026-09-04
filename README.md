@@ -1,9 +1,10 @@
 # Games
 
-A static showcase for the browser games. Three HTML files, one stylesheet, a
-folder of screenshots. No build step, no dependencies, nothing fetched at
-runtime — the same house rule the games themselves keep, so this deploys
-anywhere that can serve files and also works straight off the disk.
+A static showcase for the browser games. Three HTML files, one stylesheet, one
+small script, a folder of screenshots. No build step, no dependencies, nothing
+fetched from anywhere but this folder — the same house rule the games
+themselves keep, so this deploys anywhere that can serve files and also works
+straight off the disk.
 
 ```sh
 open index.html          # that's it
@@ -16,6 +17,7 @@ open index.html          # that's it
 | `index.html` | the shelf. One `<article class="game">` per game |
 | `games/*.html` | one detail page per game |
 | `assets/css/site.css` | the whole design. Tokens at the top |
+| `assets/js/theme.js` | the only script on the site: the theme cycle |
 | `assets/img/` | thumbnails (1200×750), social cards (1200×630), extra shots |
 | `.nojekyll` | so GitHub Pages serves the folder verbatim |
 
@@ -51,6 +53,11 @@ open index.html          # that's it
    button, rule, pill and hover state on that card follows from those two
    values; nothing else needs touching.
 
+   There is a third, `--accent-text`, but you never set it: on the light theme
+   an accent bright enough to sit under a thumb is not dark enough to be read
+   as a word, so the stylesheet mixes one down from `--accent` for anything
+   set as type. On dark it stays the accent itself.
+
 3. **Copy a detail page.** Duplicate one of `games/*.html`, and put the same
    two accent values on its `<body>` so the whole page takes the game's ink.
 
@@ -67,7 +74,32 @@ left, even cards right, and the column widths flip with it.
   is a comment in `index.html` at the spot.
 - **Type** is system-only: a serif for display, the UI sans for body, mono for
   every label. Nothing is downloaded, so nothing can fail to load.
-- **Dark by design**, not by preference query. Both games are dark-warm and the
-  page is the mat they are mounted on.
+- **Light and dark.** Light is the base; dark swaps the token *values*. Token
+  names are roles — `--ground*` is the surface, `--mark*` is the ink laid on it
+  — so every rule below reads correctly in both.
+
+  The masthead control cycles **auto → light → dark**. Auto is the default and
+  follows `prefers-color-scheme` for as long as it is selected; the other two
+  are stored in `localStorage` under `mk-theme` and set `data-theme` on
+  `<html>`. Choosing auto again *removes* the key rather than storing the word,
+  which is the point of having three states: a plain light/dark switch has to
+  store something, and whatever it stores is wrong the next time the reader's
+  machine changes theme at sunset.
+
+  The dark palette therefore appears **twice** in `site.css` — once under
+  `@media (prefers-color-scheme: dark)` guarded by `:not([data-theme="light"])`,
+  once under `[data-theme="dark"]`. Keep the two blocks identical; only their
+  selectors differ. CSS cannot spell both conditions in one selector, and the
+  repetition is easier to edit than the `var()` switch tricks that would avoid
+  it.
+
+  `theme.js` is a blocking `<script src>` in the `<head>` on purpose: the
+  attribute has to be on `<html>` before the first paint or every load flashes
+  the wrong colour. The button ships with `hidden` and the script removes it,
+  so a reader without JS gets auto and no dead control.
+- **Every `<img>` carries `width`/`height`** so the page does not jump while
+  art loads. Those attributes land as CSS presentational hints, which is why
+  `img { height: auto }` is in the reset: set a width alone anywhere and the
+  height stays pinned at the intrinsic pixel value and stretches the picture.
 - Hover lift, the plate zoom and the play cue are all switched off under
   `prefers-reduced-motion`.
