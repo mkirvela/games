@@ -1,0 +1,729 @@
+/* ==========================================================================
+   THE GALLERY — one stylesheet, no dependencies, no build step.
+   Matches the house rule the games themselves keep: nothing fetched, no CDN,
+   no web fonts. Everything below is system type and hand-mixed ink.
+   ========================================================================== */
+
+:root {
+  /* --- ink. a warm near-black, so the game art (amber, vermilion) sits on
+         something that reads as paper stock rather than screen black. ------- */
+  --ink:        #12100d;
+  --ink-panel:  #1a1713;
+  --ink-raised: #241f19;
+  --paper:      #f2ede1;
+  --paper-dim:  #c6bdaa;
+  --muted:      #8b8172;
+  --line:       rgba(242, 237, 225, 0.11);
+  --line-soft:  rgba(242, 237, 225, 0.06);
+
+  /* --- default accent. every game card overrides these two locally, so the
+         card borrows its own game's ink. ------------------------------------ */
+  --accent:     #e8a33d;
+  --accent-ink: #17110a;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --gutter: clamp(20px, 5vw, 64px);
+  --measure: 1240px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: 0.001em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A rag-paper grain over the whole page. Cheap, fixed, and the reason the flat
+   dark does not read as a void. Kept at 3.5% — visible as texture, never as
+   noise. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* And a single warm bloom behind the top of the page, so the header has a
+   light source and the fold is not a hard edge. */
+body::after {
+  content: "";
+  position: fixed;
+  left: 50%;
+  top: -420px;
+  width: 1200px;
+  height: 900px;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(232, 163, 61, 0.10), transparent 72%);
+}
+
+.shell { position: relative; z-index: 1; }
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* --- small mono labels. The one recurring device on the site: everything that
+       is metadata rather than voice is set in letterspaced mono caps. ------- */
+.label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+/* ==========================================================================
+   MASTHEAD
+   ========================================================================== */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 0 24px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.wordmark:hover { color: var(--paper); }
+
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--ink-panel);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  flex: none;
+}
+
+.masthead nav {
+  display: flex;
+  gap: 22px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.masthead nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.masthead nav a:hover { color: var(--paper); border-bottom-color: var(--accent); }
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero { padding: clamp(56px, 11vw, 116px) 0 clamp(44px, 7vw, 72px); }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 8.2vw, 78px);
+  line-height: 1.03;
+  letter-spacing: -0.022em;
+  margin: 0 0 26px;
+  max-width: 17em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero .lede {
+  font-size: clamp(17px, 2.1vw, 20.5px);
+  line-height: 1.6;
+  color: var(--paper-dim);
+  max-width: 34em;
+  margin: 0;
+}
+
+.hero .lede strong { color: var(--paper); font-weight: 600; }
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.hero-meta .rule { flex: 1; }
+
+/* ==========================================================================
+   THE SHELF — one feature row per game, alternating side.
+   ========================================================================== */
+
+.shelf {
+  display: grid;
+  gap: clamp(52px, 8vw, 92px);
+  padding-bottom: clamp(64px, 10vw, 116px);
+}
+
+.game {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: clamp(28px, 4.5vw, 56px);
+  align-items: center;
+}
+
+/* Alternate which side the art lands on, so a long shelf has a rhythm instead
+   of a column. Reordering alone would drop the art into the narrow track, so
+   the ratio flips with it. */
+.game:nth-child(even) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+}
+
+.game:nth-child(even) .plate { order: 2; }
+
+/* --- the plate. A mounted engraving: the screenshot sits inside a mat with a
+       hairline frame, the way the games' own study pages present their art. -- */
+.plate {
+  display: block;
+  position: relative;
+  padding: 9px;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  text-decoration: none;
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.plate-frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #000;
+  aspect-ratio: 8 / 5;
+}
+
+.plate-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* The play affordance rides in on hover — dark scrim, one accent word. */
+.plate-cue {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 26px 14px 11px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: linear-gradient(to top, rgba(6, 5, 4, 0.92), transparent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.plate-cue::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+.plate:hover, .plate:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  box-shadow: 0 26px 54px -24px rgba(0, 0, 0, 0.95);
+}
+
+.plate:hover .plate-frame img,
+.plate:focus-visible .plate-frame img { transform: scale(1.028); }
+
+.plate:hover .plate-cue,
+.plate:focus-visible .plate-cue { opacity: 1; transform: none; }
+
+/* --- the text column ---------------------------------------------------- */
+
+.game-body { padding-left: clamp(0px, 1.4vw, 18px); border-left: 1px solid transparent; }
+
+.game-index {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.game-index b { color: var(--accent); font-weight: 500; }
+.game-index .kind { color: var(--muted); }
+.game-index .status { margin-left: auto; }
+
+.game-body h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+
+.game-body h2 a { text-decoration: none; }
+.game-body h2 a:hover { color: var(--accent); }
+
+.game-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(17px, 2.1vw, 20px);
+  line-height: 1.45;
+  color: var(--accent);
+  margin: 0 0 18px;
+}
+
+.game-desc {
+  margin: 0 0 22px;
+  color: var(--paper-dim);
+  font-size: 16px;
+  max-width: 40em;
+}
+
+/* Two or three hard facts, as a hairline-ruled strip. A grid rather than a
+   wrapping flex row, so a long value can never orphan a cell onto line two. */
+.facts {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.facts li {
+  padding: 11px 16px;
+  border-left: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.facts li:first-child { border-left: 0; padding-left: 0; }
+
+.facts li b {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border-radius: 3px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn svg { flex: none; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--paper);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); filter: none; }
+
+.link-more {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 3px;
+}
+
+.link-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* --- status pill --------------------------------------------------------- */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 4px 11px 4px 9px;
+}
+
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  flex: none;
+}
+
+/* ==========================================================================
+   DETAIL PAGE
+   ========================================================================== */
+
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 34px 0 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.backlink:hover { color: var(--accent); }
+
+.game-hero { padding: 34px 0 clamp(28px, 5vw, 46px); }
+
+.game-hero h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(38px, 7.4vw, 70px);
+  line-height: 1.02;
+  letter-spacing: -0.024em;
+  margin: 14px 0 18px;
+}
+
+.game-hero .game-tagline { max-width: 26em; margin-bottom: 26px; }
+
+.hero-plate {
+  padding: 10px;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.95);
+  margin-bottom: clamp(40px, 7vw, 76px);
+}
+
+.hero-plate .plate-frame { aspect-ratio: 16 / 10; }
+.hero-plate figcaption {
+  padding: 12px 4px 2px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: clamp(32px, 6vw, 78px);
+  align-items: start;
+  padding-bottom: clamp(64px, 10vw, 120px);
+}
+
+.prose { max-width: 40em; }
+
+.prose h2 {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 52px 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.prose h2:first-child { margin-top: 0; }
+
+.prose h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin: 32px 0 8px;
+}
+
+.prose p { margin: 0 0 18px; color: var(--paper-dim); }
+.prose p.first { color: var(--paper); font-size: 19px; line-height: 1.6; }
+.prose strong { color: var(--paper); font-weight: 600; }
+.prose em { color: var(--paper); }
+
+.prose ul { margin: 0 0 22px; padding: 0; list-style: none; }
+
+.prose ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 11px;
+  color: var(--paper-dim);
+}
+
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.72em;
+  width: 7px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.prose ul li strong { color: var(--paper); }
+
+.pull {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 25px);
+  line-height: 1.42;
+  color: var(--paper);
+  margin: 36px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 2px solid var(--accent);
+}
+
+/* --- sidebar ------------------------------------------------------------- */
+
+.aside {
+  position: sticky;
+  top: 28px;
+  background: var(--ink-panel);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 22px;
+}
+
+.aside .btn { width: 100%; justify-content: center; margin-bottom: 10px; }
+
+.spec { margin: 20px 0 0; }
+
+.spec div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+}
+
+.spec dt { color: var(--muted); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.15em; flex: none; }
+.spec dd { margin: 0; color: var(--paper-dim); text-align: right; }
+.spec dd a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+.spec dd a:hover { border-bottom-color: var(--accent); }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 40px 0 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 30px;
+}
+
+.footer p { margin: 0; }
+
+.footer a {
+  color: var(--paper-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.footer-links {
+  display: flex;
+  gap: 22px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.footer-links a { border-bottom: 0; }
+
+/* ==========================================================================
+   NARROW
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .game,
+  .game:nth-child(even),
+  .detail { grid-template-columns: minmax(0, 1fr); }
+  .game:nth-child(even) .plate { order: 0; }
+  .game-body { padding-left: 0; }
+  .aside { position: static; }
+  .hero-plate .plate-frame { aspect-ratio: 8 / 5; }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .masthead { padding: 20px 0 18px; }
+  .masthead nav { gap: 16px; }
+  .facts { grid-auto-flow: row; }
+  .facts li { border-left: 0; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
+  .facts li:first-child { padding-top: 11px; }
+  .facts li:last-child { border-bottom: 0; }
+  .actions { gap: 14px; }
+  .btn { width: 100%; justify-content: center; }
+  .game-index .status { margin-left: 0; }
+}
+
+/* The plate lift and the cue are decoration. Anyone who has asked for less
+   motion gets none of it. */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .plate:hover { transform: none; }
+  .plate:hover .plate-frame img { transform: none; }
+}
+
+@media print {
+  body::before, body::after, .plate-cue { display: none; }
+  body { background: #fff; color: #000; }
+}
+
+/* ==========================================================================
+   IN-PROSE FIGURE — a second, smaller plate dropped into a detail page.
+   Same mat-and-hairline treatment as the hero, one step quieter.
+   ========================================================================== */
+
+.figure {
+  margin: 34px 0;
+  padding: 8px;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: 0 16px 36px -22px rgba(0, 0, 0, 0.9);
+}
+
+.figure img { border-radius: 2px; width: 100%; }
+
+.figure figcaption {
+  padding: 11px 4px 2px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Inline code in prose — the one place a technical token appears in a
+   sentence, so it gets a chip rather than a whole different voice. */
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--ink-raised);
+  border: 1px solid var(--line-soft);
+  color: var(--paper);
+}
