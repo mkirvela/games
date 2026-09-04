@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mega Squeeze — mkirvela</title>
+<meta name="description" content="A cold-pressed juice empire in one HTML file. Squeeze the fruit, fill the glass, buy help, never stop.">
+<meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mega Squeeze">
+<meta property="og:description" content="A cold-pressed juice empire in one HTML file. Squeeze the fruit, fill the glass, buy help, never stop.">
+<meta property="og:image" content="../assets/img/mega-squeeze-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="icon" type="image/png" href="../assets/img/favicon-64.png">
+
+<!-- Blocking, and in the head, so the stored theme is on <html> before the
+     first paint. Deferring it buys nothing and costs a flash of the wrong
+     colour on every load. -->
+<script src="../assets/js/theme.js"></script>
+</head>
+<body style="--accent:#ff5fae; --accent-ink:#2a0715;">
+<div class="shell">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="../index.html">
+    <img class="avatar" src="../assets/img/mkirvela.png" width="128" height="128" alt="">
+    <span class="wordmark-name">mkirvela</span>
+  </a>
+  <nav>
+    <a href="../index.html#shelf">Games</a>
+    <!-- hidden until theme.js unhides it, so no-JS readers are not offered a
+         control that cannot do anything -->
+    <button class="theme-btn" type="button" data-theme-toggle hidden>
+      Theme &middot; <span class="theme-btn-text">auto</span>
+    </button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a class="backlink" href="../index.html#shelf">&larr; All games</a>
+</div>
+
+<section class="wrap game-hero">
+  <p class="game-index"><b>03</b> <span class="kind">Clicker &middot; Idle</span></p>
+  <h1>Mega Squeeze</h1>
+  <p class="game-tagline">A cold-pressed juice empire in one HTML file.</p>
+  <div class="actions">
+    <a class="btn" href="https://mkirvela.github.io/mega-squeeze/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+    <span class="status">Playable</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <figure class="hero-plate">
+    <span class="plate-frame">
+      <img src="../assets/img/mega-squeeze-room.jpg" width="1200" height="750"
+           alt="The game at the Dragonfruit rank: a glossy pink fruit above a tumbler half full of pink juice, a counter reading 1.40B millilitres, and a right-hand panel listing presses to buy — Calloused Thumb, Iron Grip, Zest Grater, Hydraulic Thumb, Thunder Palm, Orchard Kid.">
+    </span>
+    <figcaption>Six ranks in, at Dragon Distiller. The whole palette has retinted around the fruit &mdash; the panel, the numbers, the juice and the spill along the bottom edge.</figcaption>
+  </figure>
+</div>
+
+<main class="wrap detail">
+  <div class="prose">
+
+    <h2>What it is</h2>
+    <p class="first">
+      A clicker. Tap to earn, spend on stronger taps and passive presses, climb
+      ranks, replant for a permanent multiplier, repeat. You know this machine
+      already &mdash; the point of the exercise was <em>game feel</em>, so every
+      system in it is built to be felt rather than read off a number.
+    </p>
+
+    <blockquote class="pull">
+      Squeeze the fruit, fill the glass, buy help, never stop.
+    </blockquote>
+
+    <h2>What it does with a tap</h2>
+    <ul>
+      <li><strong>The fruit is jelly.</strong> Spring physics, not a scale
+        keyframe. It squashes under the press, pokes away from the exact point
+        your finger landed, and wobbles back with overshoot.</li>
+      <li><strong>The glass is the rank meter.</strong> Every squeeze fires a
+        ballistic pour solved to land in the mouth of the tumbler. The surface is
+        a one-dimensional spring water simulation, so each drop lands with a
+        ripple that travels out and reflects off the walls. Fill it and it is
+        <strong>SERVED</strong> &mdash; the glass drains, and a bigger fruit
+        arrives.</li>
+      <li><strong>Frenzy.</strong> Mash fast enough and you climb
+        &times;2, &times;3, &times;5, &times;8 &mdash; with rising pitch, growing
+        screen shake, and a vignette that heats up with the combo.</li>
+      <li><strong>Golden Squeeze.</strong> Crits at &times;10, with a white
+        flash, sparks and a shockwave.</li>
+      <li><strong>Lifetime spill.</strong> A pool along the bottom edge that
+        grows with your total squeezes and never gets cleaned up.</li>
+    </ul>
+
+    <h2>What you build</h2>
+    <ul>
+      <li><strong>Eight fruit tiers</strong>, each hand-built as SVG rather than
+        recoloured: lemon segments, orange pith, blood orange, pomegranate
+        seeds, watermelon stripes, dragonfruit scales, a starfield Cosmic Fig,
+        and finally haloed Ambrosia. <strong>The whole palette retints per
+        tier</strong> &mdash; the fruit, the juice, the panel, the numbers.</li>
+      <li><strong>Eight ranks to earn them</strong>, from Rind Rookie up through
+        Zest Sergeant, Nectar Broker, Melon Marshal and Dragon Distiller to
+        Ambrosia Ascendant.</li>
+      <li><strong>Twelve presses</strong> in two lines. Five make your own tap
+        heavier &mdash; Calloused Thumb, Iron Grip, Zest Grater, Hydraulic Thumb,
+        Thunder Palm. Six squeeze without you &mdash; Orchard Kid, Hand Press,
+        Centrifuge, Pulp Cannon, Orbital Squeezer, and a Grove Singularity. The
+        twelfth just buys better crits.</li>
+      <li><strong>Replanting</strong> wipes the juice and the grove for a
+        permanent multiplier. Your <em>lifetime squeezes</em> are not part of the
+        deal &mdash; that number survives every replant.</li>
+      <li><strong>Offline earnings</strong>, capped at two hours, so closing the
+        tab is not punished and leaving it open overnight is not rewarded.</li>
+    </ul>
+
+    <h2>On a phone</h2>
+    <p>
+      The press room collapses into a bottom sheet, so nothing is ever stacked
+      on top of the play area, and a tap anywhere in the stage counts. Add it to
+      the home screen and it runs fullscreen. Two-thumb mashing works &mdash;
+      every finger is counted separately.
+    </p>
+
+    <h2>Where it stands</h2>
+    <p>
+      Finished and playable. One HTML file, no build, no bundler, no
+      dependencies; progress autosaves to <code>localStorage</code>.
+      <code>prefers-reduced-motion</code> is respected throughout, which for a
+      game this loud means most of it switches off.
+    </p>
+    <p>
+      One asterisk on the house rule: this is the only game here that touches
+      the network, for a Google Fonts stylesheet. It falls back cleanly offline.
+    </p>
+
+  </div>
+
+  <aside class="aside">
+    <a class="btn" href="https://mkirvela.github.io/mega-squeeze/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+    <a class="btn btn-ghost" href="https://github.com/mkirvela/mega-squeeze">Source on GitHub</a>
+
+    <dl class="spec">
+      <div><dt>Genre</dt><dd>Clicker / idle</dd></div>
+      <div><dt>Session</dt><dd>Minutes at a time</dd></div>
+      <div><dt>Controls</dt><dd>Tap, hold, spacebar</dd></div>
+      <div><dt>Platform</dt><dd>Any browser</dd></div>
+      <div><dt>Install</dt><dd>None</dd></div>
+      <div><dt>Saves</dt><dd>In your browser</dd></div>
+      <div><dt>Built with</dt><dd>SVG, spring physics</dd></div>
+      <div><dt>Status</dt><dd>Playable</dd></div>
+    </dl>
+  </aside>
+</main>
+
+<footer class="wrap footer">
+  <p class="label">Made by mkirvela &middot; Helsinki</p>
+  <div class="footer-links">
+    <a href="../index.html#shelf">All games</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
