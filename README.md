@@ -1,6 +1,6 @@
 # Games
 
-A static showcase for the browser games. Four HTML files, one stylesheet, one
+A static showcase for the browser games. Five HTML files, one stylesheet, one
 small script, a folder of screenshots. No build step, no dependencies, nothing
 fetched from anywhere but this folder — the same house rule the games
 themselves keep, so this deploys anywhere that can serve files and also works
@@ -61,7 +61,7 @@ open index.html          # that's it
 3. **Copy a detail page.** Duplicate one of `games/*.html`, and put the same
    two accent values on its `<body>` so the whole page takes the game's ink.
 
-4. **Update the count** in the hero (`Three games · more coming`) and the date
+4. **Update the count** in the hero (`Four games · more coming`) and the date
    next to it.
 
 The cards alternate which side the art sits on automatically — odd cards put it

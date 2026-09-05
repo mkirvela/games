@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Clash — mkirvela</title>
+<meta name="description" content="A pixel-art betting auto-battler. Build an army, let a goblin bookie price it, bet on the outcome, then watch it burn.">
+<meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pixel Clash">
+<meta property="og:description" content="A pixel-art betting auto-battler. Build an army, let a goblin bookie price it, bet on the outcome, then watch it burn.">
+<meta property="og:image" content="../assets/img/pixel-clash-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="icon" type="image/png" href="../assets/img/favicon-64.png">
+
+<!-- Blocking, and in the head, so the stored theme is on <html> before the
+     first paint. Deferring it buys nothing and costs a flash of the wrong
+     colour on every load. -->
+<script src="../assets/js/theme.js"></script>
+</head>
+<body style="--accent:#c85cff; --accent-ink:#1a0526;">
+<div class="shell">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="../index.html">
+    <img class="avatar" src="../assets/img/mkirvela.png" width="128" height="128" alt="">
+    <span class="wordmark-name">mkirvela</span>
+  </a>
+  <nav>
+    <a href="../index.html#shelf">Games</a>
+    <!-- hidden until theme.js unhides it, so no-JS readers are not offered a
+         control that cannot do anything -->
+    <button class="theme-btn" type="button" data-theme-toggle hidden>
+      Theme &middot; <span class="theme-btn-text">auto</span>
+    </button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a class="backlink" href="../index.html#shelf">&larr; All games</a>
+</div>
+
+<section class="wrap game-hero">
+  <p class="game-index"><b>04</b> <span class="kind">Auto-battler &middot; Betting</span></p>
+  <h1>Pixel Clash</h1>
+  <p class="game-tagline">You do not control the fight. You price it.</p>
+  <div class="actions">
+    <a class="btn" href="https://mkirvela.github.io/pixel-clash/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+    <span class="status">Playable &middot; balancing</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <figure class="hero-plate">
+    <span class="plate-frame">
+      <img src="../assets/img/pixel-clash-prep.jpg" width="1200" height="750"
+           alt="The prep screen: a pixel-art battlefield with a blue warband on the left and a red one on the right, a purple panel on the right holding Griswold the goblin oddsmaker, the matchup at 48%, the enemy roster and I WIN / I LOSE buttons, and a row of shop cards along the bottom.">
+    </span>
+    <figcaption>Prep. Griswold has valued you at 48&percnt; &mdash; &ldquo;a coin flip, my favourite kind of fight&rdquo; &mdash; and everything on the shop rack below is something he has not priced in.</figcaption>
+  </figure>
+</div>
+
+<main class="wrap detail">
+  <div class="prose">
+
+    <h2>What it is</h2>
+    <p class="first">
+      A pixel-art auto-battler in which you never touch the fight. You build a
+      warband, a goblin bookie named Griswold prices it, you bet on your own
+      outcome, roll the dice, and then watch it burn &mdash; with a few dirty
+      tricks left in your bag.
+    </p>
+
+    <blockquote class="pull">
+      The oddsmaker only sees the armies at arrival. Everything you buy after
+      the lock is invisible to him. That gap is your edge.
+    </blockquote>
+
+    <h2>The loop</h2>
+    <ul>
+      <li><strong>Prep.</strong> A fresh enemy warband is generated. Griswold
+        &ldquo;considers&rdquo; your fielded army &mdash; he simulates the fight
+        about forty times &mdash; and <strong>locks the odds</strong>. Only then
+        do you shop: skills, recruits, consumables, evolutions.</li>
+      <li><strong>Bet.</strong> I WIN or I LOSE, pick a chip, fight. Backing
+        yourself always pays at least the league's win floor. Betting against
+        yourself gives that up &mdash; and gets you a rack of sabotage items to
+        make sure of it.</li>
+      <li><strong>Dice.</strong> One to three of them, by league. Roll low and
+        the enemy is buffed; roll the middle and chaos lands on everyone; roll
+        high and it is yours. They resolve <em>before</em> the bell, on the
+        standing formation, so a lightning storm can kill one of your units
+        before the fight has started.</li>
+      <li><strong>Battle.</strong> Fully automatic. Chests fall from the sky
+        mid-fight; crack them and drag what is inside onto the field. Sudden
+        death at thirty-five seconds.</li>
+      <li><strong>Result.</strong> The payout flies into the gold pile as coins,
+        and a fresh warband is waiting.</li>
+    </ul>
+
+    <h2>Where the edge lives</h2>
+    <p>
+      Griswold remembers. Bench a unit and he is recalled to re-price the army
+      &mdash; and this time he sees every upgrade you have bought since. Same
+      army, same number; changed army, full re-valuation. Recalling him is how
+      you lose the edge you were building.
+    </p>
+    <p>
+      Your bag, the dice, the chests and the relics are never priced in at all.
+      Neither is a warband you have deliberately starved: skimp or bench, and
+      the odds make you a long-shot on a fight you may still be able to steal
+      with what is in your pocket.
+    </p>
+
+    <figure class="figure">
+      <img src="../assets/img/pixel-clash-relics.jpg" width="1000" height="625"
+           alt="Mirella the peddler on a neon Colosseum backdrop, offering three face-down relic cards turned face up: Lucky Chests, Gilded Chests and a legendary Mercenary Contract.">
+      <figcaption>Between leagues, Mirella deals three relics and you keep one. Free, permanent for the run, and Griswold never sees it.</figcaption>
+    </figure>
+
+    <h2>What is in it</h2>
+    <ul>
+      <li><strong>Six leagues</strong>, Wood to Mythic, each with its own entry
+        fee, roster cap, dice count, house edge and win floor. Promotion is
+        bought with <em>correct bets</em>, not victories.</li>
+      <li><strong>Seven classes</strong> &mdash; Knight, Archer, Mage, Healer,
+        Assassin, Bomber, Guardian &mdash; each with an ultimate and an
+        evolution that changes a rule rather than a number: a Paladin heals
+        allies when it hits, a Sniper pierces, a Colossus stuns the ground.</li>
+      <li><strong>Eighteen procedural backdrops</strong>, three per league, one
+        picked when you arrive.</li>
+      <li><strong>Skills, relics and consumables</strong> in four rarities, up to
+        a Golden God &mdash; plus sabotage items with names like Bench Warrant,
+        Tainted Water and White Flag for the rounds you have bet against
+        yourself.</li>
+      <li><strong>No income but the bets.</strong> You start on $300. Drop below
+        $50 and you are forced all-in; lose that and the run is over. The house
+        will front you a $25 marker so you are never stuck, which is exactly as
+        generous as it sounds.</li>
+    </ul>
+
+    <h2>How the odds are made</h2>
+    <p>
+      They are Monte Carlo, not a formula. Griswold clones your fielded units and
+      runs <em>the real battle</em> headlessly forty times, spread across frames
+      so the round never hitches. The enemy is tuned the same way &mdash; a flat
+      handicap bisected against a deterministic phantom army representing what an
+      average investor would have fielded at this league and round.
+    </p>
+    <p>
+      Variance is deliberate. Damage dealt and taken wobble by a fifth, ult
+      charge starts randomly, formations jitter. Without it the outcomes came out
+      near-deterministic and the odds collapsed to 4&percnt; and 96&percnt;, which
+      is no kind of bet at all.
+    </p>
+
+    <h2>Where it stands</h2>
+    <p>
+      Playable end to end through all six leagues. The economy is honest about
+      itself: the league fees, the win floors and the power curve are first
+      guesses waiting on real play, and the post-lock edge may well turn out to
+      be too strong.
+    </p>
+    <p>
+      One HTML file, no build and no dependencies &mdash; vanilla Canvas 2D,
+      WebAudio synthesised at runtime, HTML overlays for the panels. Sprites are
+      string pixel maps palette-swapped per team, and a 3&times;5 pixel bitmap
+      font draws every damage number on screen. Under 900px wide the prep panels
+      become a tabbed bottom sheet.
+    </p>
+
+  </div>
+
+  <aside class="aside">
+    <a class="btn" href="https://mkirvela.github.io/pixel-clash/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+    <a class="btn btn-ghost" href="https://github.com/mkirvela/pixel-clash-code">Source on GitHub</a>
+
+    <dl class="spec">
+      <div><dt>Genre</dt><dd>Betting auto-battler</dd></div>
+      <div><dt>Session</dt><dd>A run at a sitting</dd></div>
+      <div><dt>Controls</dt><dd>Click or tap</dd></div>
+      <div><dt>Platform</dt><dd>Any browser</dd></div>
+      <div><dt>Install</dt><dd>None</dd></div>
+      <div><dt>Saves</dt><dd>Leaderboards only</dd></div>
+      <div><dt>Built with</dt><dd>Canvas 2D, no deps</dd></div>
+      <div><dt>Status</dt><dd>Balancing</dd></div>
+    </dl>
+  </aside>
+</main>
+
+<footer class="wrap footer">
+  <p class="label">Made by mkirvela &middot; Helsinki</p>
+  <div class="footer-links">
+    <a href="../index.html#shelf">All games</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
