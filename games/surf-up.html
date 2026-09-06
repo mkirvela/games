@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surf Up! — mkirvela</title>
+<meta name="description" content="A two-thumb endless surfer in neon. Steer with one hand, stay upright with the other, and own nine beaches.">
+<meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Surf Up!">
+<meta property="og:description" content="A two-thumb endless surfer in neon. Steer with one hand, stay upright with the other, and own nine beaches.">
+<meta property="og:image" content="../assets/img/surf-up-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="icon" type="image/png" href="../assets/img/favicon-64.png">
+
+<!-- Blocking, and in the head, so the stored theme is on <html> before the
+     first paint. Deferring it buys nothing and costs a flash of the wrong
+     colour on every load. -->
+<script src="../assets/js/theme.js"></script>
+</head>
+<body style="--accent:#00d4e6; --accent-ink:#052a30;">
+<div class="shell">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="../index.html">
+    <img class="avatar" src="../assets/img/mkirvela.png" width="128" height="128" alt="">
+    <span class="wordmark-name">mkirvela</span>
+  </a>
+  <nav>
+    <a href="../index.html#shelf">Games</a>
+    <!-- hidden until theme.js unhides it, so no-JS readers are not offered a
+         control that cannot do anything -->
+    <button class="theme-btn" type="button" data-theme-toggle hidden>
+      Theme &middot; <span class="theme-btn-text">auto</span>
+    </button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a class="backlink" href="../index.html#shelf">&larr; All games</a>
+</div>
+
+<section class="wrap game-hero">
+  <p class="game-index"><b>05</b> <span class="kind">Endless surfer &middot; Portrait</span></p>
+  <h1>Surf Up!</h1>
+  <p class="game-tagline">Ride north &mdash; don't fall.</p>
+  <div class="actions">
+    <a class="btn" href="https://mkirvela.github.io/surf-up/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+    <span class="status">Playable</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <figure class="hero-plate">
+    <span class="plate-frame">
+      <img src="../assets/img/surf-up-beaches.jpg" width="1200" height="750"
+           alt="Three portrait screens side by side: a surfer threading the gap in a shipwreck under a pink retro sun; a neon rail curving in over a night lagoon with a trail of coins; and a black seascape ruled by a magenta perspective grid with a long rail running to the horizon.">
+    </span>
+    <figcaption>Three of the nine beaches. Each has its own palette, horizon and hazard mix &mdash; and the game is portrait, so these are the whole screen, not a crop.</figcaption>
+  </figure>
+</div>
+
+<main class="wrap detail">
+  <div class="prose">
+
+    <h2>What it is</h2>
+    <p class="first">
+      An endless surfer that runs up the screen rather than across it. The ocean
+      scrolls down, you sit in the lower third, and everything that wants to end
+      your run appears on the horizon and arrives in a second or two.
+    </p>
+    <p>
+      The genre it comes from is built on one-touch input &mdash; hold to climb,
+      release to drop &mdash; and that single input is the ceiling on how deep
+      those games can go. This one spends both thumbs instead.
+    </p>
+
+    <blockquote class="pull">
+      Left thumb is the board. Right thumb is your body. Turning banks the board
+      into the turn, so a hard steer has to be caught with the other hand.
+    </blockquote>
+
+    <h2>Staying up is the game</h2>
+    <ul>
+      <li><strong>Balance is the failure state</strong>, not a health bar. Near
+        upright the board self-rights. Past that it is an inverted pendulum: the
+        further it leans, the faster it goes over. Chop, whitewater, random
+        gusts, landings and your own steering all push at it.</li>
+      <li><strong>There is a moment to save it.</strong> Past the red line you
+        get <em>0.45 seconds</em> and the word RECOVER! before you are in the
+        water.</li>
+      <li><strong>Doing nothing is not an option for long.</strong> With no input
+        at all a run survives about forty seconds of chop at the start, and about
+        twelve by nine hundred metres.</li>
+    </ul>
+
+    <h2>Air, and what to do with it</h2>
+    <p>
+      Wave crests are steerable ramps &mdash; ride into one and pump for height.
+      Lean freezes while you are airborne, which is the whole point: it frees the
+      right thumb to spin and grab.
+    </p>
+    <ul>
+      <li><strong>Sixteen tricks</strong> off two thumbs &mdash; spins by the
+        180, Indy and Method grabs, kickflips and shove-its, back- and
+        frontflips off both thumbs together. A single-thumb flick waits a tenth
+        of a second for the other one, so a slightly staggered pull still reads
+        as the backflip you meant.</li>
+      <li><strong>Land clean or don't.</strong> More than forty degrees off, or
+        still mid-flip, is <em>sketchy</em>: forty percent of the points, a hard
+        kick to your lean, and your streak gone. A clean landing pays tricks and
+        airtime multiplied by combo and streak, and gets ranked
+        NICE &rarr; RAD &rarr; SICK &rarr; GNARLY &rarr; LEGENDARY.</li>
+      <li><strong>Neon rails</strong> float on the water in straights, S-bends
+        and snakes. Ride the entry chevron or land anywhere along one. Grinding
+        lifts you out of reach of everything below, and the multiplier steps up
+        every 0.6 s &mdash; but a rail has no self-righting and gets wobblier
+        every second, so a good rider lasts about ten of them. Hop to another
+        within 1.6 s for a TRANSFER that carries the multiplier over.</li>
+    </ul>
+
+    <h2>What is trying to end it</h2>
+    <p>
+      Fin sharks track your lane until they are nearly level, then commit.
+      Shipwrecks are wide hulls with a single gap &mdash; and there are sometimes
+      coins sitting in the gap, which is not generosity. The ambush shark is the
+      nasty one: a grey dot shadows you for 1.4 s, locks on for 0.6 s behind a
+      dashed red ring, and then erupts. Dodge it close and you are paid a CLOSE
+      CALL for the trouble.
+    </p>
+    <p>
+      Almost everything can also be jumped. Come down <em>on</em> a shark and you
+      bonk it &mdash; three hundred points, a bounce, and one shark floating
+      belly-up behind you.
+    </p>
+
+    <figure class="figure">
+      <img src="../assets/img/surf-up-hazards.jpg" width="1000" height="720"
+           alt="Two portrait screens showing wipeouts: on a blood-red sea a shark has landed on the surfer under the words FLIPPED BY A LEAPING SHARK, and on a grey-green storm sea the surfer has hit a wooden hull under the words CRASHED INTO A SHIPWRECK — jump it or find the gap.">
+      <figcaption>Shark Alley and Typhoon Reach, both going badly. The wipeout tells you what got you, and what you should have done about it.</figcaption>
+    </figure>
+
+    <h2>Nine beaches to own</h2>
+    <p>
+      The game opens on a pixel-art overworld &mdash; two coastlines either side
+      of a snaking channel, with a road, plank bridges, drifting clouds and three
+      boats, one of them under a pink sail. The nine beaches sit along the coast
+      as numbered shield badges, from one-star Sunset Shallows round to five-star
+      Typhoon Reach.
+    </p>
+    <p>
+      Each one has a score threshold. Beat it <strong>in a single run</strong>
+      and you own the beach: a chrome banner and confetti mid-run, and a gold
+      crown on the map that stays there. Every beach also has its own palette,
+      horizon and hazard weighting &mdash; Neon Pier is thick with rails,
+      Shark Alley with sharks, Typhoon Reach with all of it at once.
+    </p>
+
+    <h2>The Jump Codex</h2>
+    <p>
+      A polaroid album of every trick in the game. When one registers in mid-air
+      the game takes an actual photograph &mdash; a small snapshot read straight
+      off the live canvas at the moment the surfer is painted, before the HUD and
+      the scanlines go on. Land it clean and the shot is kept if it is your first
+      or your best, announced with a flash, a shutter click and a polaroid
+      sliding in from the side. Five clean landings master a trick and stamp the
+      card in gold.
+    </p>
+
+    <h2>Where it stands</h2>
+    <p>
+      Finished and playable: nine beaches, sixteen tricks, the codex, and the map
+      that remembers what you own. Built for a phone in portrait, and careful
+      about it &mdash; the thumb sticks are clamped above a safe band at the
+      bottom of the screen so that a full downward push can never turn into an
+      Android home-swipe. On a desktop it falls back to WASD, the arrow keys and
+      the space bar.
+    </p>
+    <p>
+      One HTML file, no build and no dependencies. Everything you see is drawn to
+      a canvas, including the overworld, which is generated procedurally into an
+      offscreen buffer as six-pixel cells and then baked once.
+    </p>
+
+  </div>
+
+  <aside class="aside">
+    <a class="btn" href="https://mkirvela.github.io/surf-up/">
+      Play in browser
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5-8-4.5z" fill="currentColor"/></svg>
+    </a>
+
+    <dl class="spec">
+      <div><dt>Genre</dt><dd>Endless surfer</dd></div>
+      <div><dt>Session</dt><dd>A run at a time</dd></div>
+      <div><dt>Controls</dt><dd>Two thumbs / WASD</dd></div>
+      <div><dt>Screen</dt><dd>Portrait</dd></div>
+      <div><dt>Install</dt><dd>None</dd></div>
+      <div><dt>Saves</dt><dd>In your browser</dd></div>
+      <div><dt>Built with</dt><dd>Canvas 2D, no deps</dd></div>
+      <div><dt>Status</dt><dd>Playable</dd></div>
+    </dl>
+  </aside>
+</main>
+
+<footer class="wrap footer">
+  <p class="label">Made by mkirvela &middot; Helsinki</p>
+  <div class="footer-links">
+    <a href="../index.html#shelf">All games</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Games
 
-A static showcase for the browser games. Five HTML files, one stylesheet, one
+A static showcase for the browser games. Six HTML files, one stylesheet, one
 small script, a folder of screenshots. No build step, no dependencies, nothing
 fetched from anywhere but this folder — the same house rule the games
 themselves keep, so this deploys anywhere that can serve files and also works
@@ -39,6 +39,13 @@ open index.html          # that's it
    Crop the game's own HUD chrome off the edges — the card wants the art, and
    the detail page is where a real HUD belongs.
 
+   **A portrait game needs a different card.** Surf Up! letterboxes to a fixed
+   portrait column, so a landscape grab is mostly black bars. Mount two real
+   portrait frames side by side on a ground mixed from the game's own palette
+   instead — see `surf-up.jpg`, and the `magick` recipe in the commit that
+   added it. It reads as deliberate, and it tells the reader up front that this
+   one is built for a phone.
+
 2. **Copy one card.** In `index.html`, duplicate a whole
    `<article class="game">` block. Bump the index number, change the copy, and
    set the two custom properties in its `style` attribute:
@@ -61,7 +68,7 @@ open index.html          # that's it
 3. **Copy a detail page.** Duplicate one of `games/*.html`, and put the same
    two accent values on its `<body>` so the whole page takes the game's ink.
 
-4. **Update the count** in the hero (`Four games · more coming`) and the date
+4. **Update the count** in the hero (`Five games · more coming`) and the date
    next to it.
 
 The cards alternate which side the art sits on automatically — odd cards put it
